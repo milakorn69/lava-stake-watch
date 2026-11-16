@@ -28,7 +28,7 @@ Total delegated 1,358,372 LAVA by 51 delegators
 **New chains on Lava**, with the providers that are not staked on them yet:
 
 ```
-🆕 New chain on Lava: monad mainnet (MONAD)
+🆕 New chain on Lava: hyperliquid mainnet (HYPERLIQUID)
 Not staked yet: MrsML
 ```
 
@@ -104,3 +104,4 @@ Watching another provider (a competitor, or a friend's) is one more `[[provider]
 ## License
 
 MIT
+
