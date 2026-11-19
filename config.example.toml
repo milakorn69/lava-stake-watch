@@ -1,0 +1,29 @@
+# lava-stake-watch configuration. Copy to /etc/lava-stake-watch/config.toml and edit.
+
+[settings]
+state_file = "/var/lib/lava-stake-watch/state.json"
+# TG_TOKEN and TG_CHAT. Environment variables override the file.
+env_file = "/etc/lava-stake-watch.env"
+timezone = "UTC"              # for jail end times, e.g. "Europe/Berlin"
+
+# Lava REST endpoints, tried in order. The daily report reads 24h-old state with the
+# x-cosmos-block-height header, so the first one should be an archive node.
+rest = ["https://lava.rest.lava.build", "https://lava-api.polkachu.com"]
+
+min_delegation = 1000         # LAVA; smaller delegation moves only go to the daily report
+min_stake_change = 1000       # LAVA; alert when the provider's own stake moves by more
+new_specs = true              # alert when Lava adds or removes a chain spec
+fail_alert_after = 3          # alert after this many failed runs in a row, and once it recovers
+usd_price = true              # show rewards in USD (CoinGecko) in the daily report
+
+# ---------------------------------------------------------------------------------------------
+# Providers to watch. One block per provider address.
+#   address   the provider's lava@ address
+#   name      optional; defaults to the on-chain moniker
+
+[[provider]]
+address = "lava@1replacewithyourprovideraddressxxxxxxxxxxx"
+
+# [[provider]]
+# address = "lava@1anotherprovideryouwanttowatchxxxxxxxxxxxx"
+# name = "Second provider"

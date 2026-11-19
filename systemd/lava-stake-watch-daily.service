@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily lava-stake-watch report
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/lava-stake-watch/lava_stake_watch.py -c /etc/lava-stake-watch/config.toml --daily
