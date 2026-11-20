@@ -152,7 +152,9 @@ class Watch:
                 "stake": int(e["stake"]["amount"]),
                 "endpoints": sorted(ep["iPPORT"] for ep in e.get("endpoints") or []),
             } for e in entries},
-            "delegators": {d["delegator"]: int(d["amount"]["amount"]) for d in delegs if int(d["amount"]["amount"]) > 0},
+            # the provider's own stake is listed as a delegation to itself, and emptied delegations stay as dust
+            "delegators": {d["delegator"]: int(d["amount"]["amount"]) for d in delegs
+                           if d["delegator"] != addr and int(d["amount"]["amount"]) >= U},
         }
 
     def name(self, p, snap):
@@ -315,7 +317,12 @@ class Watch:
             h = h1 = None
         for p in self.providers:
             addr = p["address"]
-            s = self.snapshot(addr)
+            try:
+                s = self.snapshot(addr)
+            except Exception as e:
+                self.send(f"📊 <b>{html.escape(p.get('name') or short(addr))}</b>: daily report unavailable\n"
+                          f"<code>{html.escape(str(e))[:300]}</code>")
+                continue
             ch = s["chains"]
             fr = [c for c, v in ch.items() if v["frozen"]]
             jailed = [c for c, v in ch.items() if v["jail_end"] > now]
@@ -339,8 +346,10 @@ class Watch:
                 line = f"Estimated rewards this month: {lava(r_now)} LAVA"
                 if price:
                     line += f" (${r_now / U * price:,.0f})"
-                if r_old is not None:
+                if r_old is not None and r_now >= r_old:
                     line += f", {signed(r_now - r_old)} LAVA in 24h"
+                elif r_old is not None:  # rewards were paid out and the estimate started from zero
+                    line += ", new rewards month started"
                 lines.append(line)
             except Exception as e:
                 lines.append(f"Estimated rewards unavailable: {html.escape(str(e))[:120]}")
