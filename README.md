@@ -22,7 +22,7 @@ MrsML
 ⚙️ Commission 50% → 75%
 💰 +250,000 LAVA delegated by lava@13avw…96d264
 💸 −40,000 LAVA undelegated by lava@1q9xy…v8a0j0 (left)
-Total delegated 1,358,372 LAVA by 51 delegators
+Total delegated 1,358,372 LAVA by 19 delegators
 ```
 
 **New chains on Lava**, with the providers that are not staked on them yet:
@@ -38,7 +38,7 @@ everything that happened in the last 24 hours:
 ```
 📊 MrsML · last 24 hours
 Chains: 36 active
-Self-stake 78,323 LAVA · delegated 1,358,372 LAVA by 51 delegators · commission 75%
+Self-stake 78,323 LAVA · delegated 1,358,372 LAVA by 19 delegators · commission 75%
 Delegations: +250,000 in (2) · −40,000 out (1)
 Estimated rewards this month: 59,373 LAVA ($971), +242 LAVA in 24h
 ```
@@ -61,6 +61,9 @@ so a short jail between two runs is not missed.
 - The first run records the current state silently and sends one summary, so you are
   not flooded with every existing delegation.
 - When one host moves for many chains, that is one line, not twenty.
+- The provider's own stake is listed on chain as a delegation to itself; it is shown as
+  self-stake and not counted as a delegator, and neither are emptied delegations left with
+  dust under 1 LAVA.
 - Delegation moves under 1 LAVA (reward claims) are ignored; moves under `min_delegation`
   go only to the daily report.
 - A provider added to the config later is recorded silently on its first run.
