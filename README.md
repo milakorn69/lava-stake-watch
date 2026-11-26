@@ -1,5 +1,8 @@
 # lava-stake-watch
 
+[![ci](https://github.com/milakorn69/lava-stake-watch/actions/workflows/ci.yml/badge.svg)](https://github.com/milakorn69/lava-stake-watch/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Telegram alerts about your Lava Network provider's state on chain: frozen and jailed
 chains, endpoint changes, delegations in and out, commission, and new chain specs, plus a
 daily report with the 24-hour change in estimated rewards.

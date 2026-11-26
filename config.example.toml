@@ -7,9 +7,11 @@ env_file = "/etc/lava-stake-watch.env"
 timezone = "UTC"              # for jail end times, e.g. "Europe/Berlin"
 
 # Lava REST endpoints, tried in order. The daily report reads 24h-old state with the
-# x-cosmos-block-height header, so the first ones must keep at least a day of history:
-# lava.rest.lava.build does, lava.api.kjnodes.com keeps a few days, polkachu keeps none.
-rest = ["https://lava.rest.lava.build", "https://lava.api.kjnodes.com", "https://lava-api.polkachu.com"]
+# x-cosmos-block-height header, so the first ones must keep at least a day of history.
+# Checked 26.11.2026, after the v6.3.0 upgrade: polkachu answers everything and keeps about
+# 5 days; lava.rest.lava.build often answers "This endpoint is not supported" for older
+# heights; lava.api.kjnodes.com keeps a few days but was down. Re-check if the 24h numbers vanish.
+rest = ["https://lava-api.polkachu.com", "https://lava.rest.lava.build", "https://lava.api.kjnodes.com"]
 
 min_delegation = 1000         # LAVA; smaller delegation moves only go to the daily report
 min_stake_change = 1000       # LAVA; alert when the provider's own stake moves by more

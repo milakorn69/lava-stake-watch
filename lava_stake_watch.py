@@ -63,7 +63,7 @@ class Watch:
         with open(path, "rb") as f:
             self.cfg = tomllib.load(f)
         s = self.cfg.get("settings", {})
-        self.rest = s.get("rest", ["https://lava.rest.lava.build"])
+        self.rest = s.get("rest", ["https://lava-api.polkachu.com", "https://lava.rest.lava.build"])
         self.rest = [self.rest] if isinstance(self.rest, str) else self.rest
         self.state_file = s.get("state_file", "/var/lib/lava-stake-watch/state.json")
         self.tz_name = s.get("timezone", "UTC")
@@ -346,7 +346,8 @@ class Watch:
                 line = f"Estimated rewards this month: {lava(r_now)} LAVA"
                 if price:
                     line += f" (${r_now / U * price:,.0f})"
-                if r_old is not None and r_now >= r_old:
+                # the estimate drifts both ways during the month; only a drop by more than half is the payout reset
+                if r_old is not None and r_now >= r_old / 2:
                     line += f", {signed(r_now - r_old)} LAVA in 24h"
                 elif r_old is not None:  # rewards were paid out and the estimate started from zero
                     line += ", new rewards month started"
