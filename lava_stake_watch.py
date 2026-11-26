@@ -312,9 +312,9 @@ class Watch:
         events = [e for e in state.get("events", []) if now - e["t"] < DAY]
         price = self.usd()
         try:
-            h, h1 = self.heights()
+            _, h1 = self.heights()
         except Exception:
-            h = h1 = None
+            h1 = None
         for p in self.providers:
             addr = p["address"]
             try:
